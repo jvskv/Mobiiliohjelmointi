@@ -1,21 +1,22 @@
 import React, { useState } from "react";
 import {
+  SafeAreaView,
   StyleSheet,
   Text,
-  Button,
-  StatusBar,
-  TextInput,
   View,
-  SafeAreaView,
+  Button,
+  TextInput,
   FlatList,
 } from "react-native";
+import { StatusBar } from "expo-status-bar";
 
-export default function App() {
-  const [result, setResult] = React.useState(0);
+export default function Laskin({ navigation }) {
+  const [result, setResult] = useState(0);
   const [data, setData] = useState([]);
-  const [number1, setNumber1] = React.useState("");
-  const [number2, setNumber2] = React.useState("");
-  const [key, setKey] = React.useState(0);
+  const [key, setKey] = useState(0);
+
+  const [number1, setNumber1] = useState("");
+  const [number2, setNumber2] = useState("");
 
   const buttonPressedPlus = () => {
     setResult(parseInt(number1) + parseInt(number2));
@@ -57,6 +58,8 @@ export default function App() {
             onChangeText={(number1) => setNumber1(number1)}
             value={number1}
           />
+        </View>
+        <View>
           <TextInput
             style={styles.input}
             onChangeText={(number2) => setNumber2(number2)}
@@ -68,12 +71,12 @@ export default function App() {
           <Button title="-" onPress={buttonPressedMinus} />
         </View>
         <View style={styles.history}>
-          <Text>History</Text>
-          <FlatList
-            data={data}
-            renderItem={({ item }) => <Text>{item.title}</Text>}
+          <Button
+            title="Historia"
+            onPress={() => navigation.navigate("Historia", { data })}
           />
         </View>
+        <StatusBar style="auto" />
       </View>
     </SafeAreaView>
   );
@@ -88,7 +91,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   innerContainer: {
-    width: 100,
+    width: 130,
   },
   centerResult: {
     alignItems: "center",
@@ -104,9 +107,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   history: {
-    marginTop: 40,
+    marginTop: 25,
     justifyContent: "center",
     alignItems: "center",
-    width: 100,
   },
 });
